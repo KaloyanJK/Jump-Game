@@ -24,6 +24,51 @@
 
 <body>
 
+  <!-- =========================
+       HEADER / NAVIGATION BAR
+       Contains logo and page links
+       ========================= -->
+  <header>
+    <nav class="navbar navbar-expand-lg" aria-label="Main navigation">
+      <div class="container-fluid">
+
+        <!-- Logo image representing the weather app -->
+        <img src="assets/images/logo-weather-2.webp" alt="Weather app logo" width="52" />
+
+        <!-- Button for toggling navbar on mobile devices -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation links (collapsible on smaller screens) -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+
+            <!-- Link to the game page -->
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Game</a>
+            </li>
+
+            <!-- Link to current page (active state) -->
+            <li class="nav-item">
+              <a class="nav-link active" href="weather.html" aria-current="page">Weather Checker</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- FOOTER -->
+  <footer class="footer text-center py-3 mt-auto">
+
+    <!-- Simple copyright notice -->
+    <small>Weather App by Kal © 2026</small>
+
+  </footer>
+
   <!-- Bootstrap JavaScript bundle (needed for navbar toggle) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer></script>
   <!-- defer allows HTML to render first -->
@@ -33,6 +78,7 @@
        - Updating UI dynamically
        - Theme toggle functionality -->
   <script src="assets/js/script.js" defer></script>
-  
+
 </body>
+
 </html>

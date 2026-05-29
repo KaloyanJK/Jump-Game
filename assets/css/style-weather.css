@@ -31,3 +31,51 @@ body {
   color: var(--text);         /* Uses theme text colour */
   background: var(--bg);      /* Uses theme background */
 }
+
+/* Active navigation link underline */
+.active {
+  border-bottom: 1px solid var(--text);
+}
+
+/* =========================
+   WEATHER PAGE BACKGROUND
+   ========================= */
+.weather-page {
+  background: url("../images/weather-background.webp") center/cover no-repeat;
+  position: relative; /* Needed for overlay positioning */
+}
+
+/* Dark overlay on top of background image */
+.weather-page::before {
+  content: "";               /* Required for pseudo-element */
+  position: absolute;
+  inset: 0;                  /* Covers entire container */
+  background: rgba(0, 0, 0, 0.35); /* Dark transparent overlay */
+}
+
+/* Ensures content sits above overlay */
+header,
+main,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Navbar background color */
+.navbar {
+  background: var(--surface) !important;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+footer {
+  background: #ffffff;
+  color: var(--text);
+}
+
+/* Dark mode footer */
+body.dark-mode footer {
+  background: #313f57;
+  color: var(--text);
+}

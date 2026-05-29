@@ -37,7 +37,57 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: var(--text);             /* Uses variable */
-  background: radial-gradient(circle at top, var(--bg) 0%, #1f5f44 100%);
+  background: radial-gradient(circle at center, var(--bg) 0%, #1f5f44 100%);
   min-height: 100vh;
   user-select: none;              /* Prevents text selection */
+}
+
+/* Active nav link underline */
+.active {
+  border-bottom: 1px solid var(--text);
+}
+
+/* Centers main content vertically */
+main {
+  margin: auto 0;
+}
+
+/* Navbar background color */
+.navbar {
+  background: var(--surface) !important;
+}
+
+/* Navbar text color */
+.navbar a,
+.navbar .nav-link {
+  color: var(--text) !important;
+}
+
+/* Navbar toggler style for dark mode */
+body.dark-mode .navbar-toggler {
+  border-color: rgba(235, 65, 65, 0.6);
+}
+
+body.dark-mode .navbar-toggler-icon {
+  filter: invert(1) brightness(2);
+}
+
+body.dark-mode .navbar a,
+body.dark-mode .navbar .nav-link,
+body.dark-mode .navbar .nav-link.active {
+  color: var(--text) !important;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+footer {
+  background: #ffffff;
+  color: var(--text);
+}
+
+/* Dark mode footer */
+body.dark-mode footer {
+  background: #313f57;
+  color: var(--text);
 }
