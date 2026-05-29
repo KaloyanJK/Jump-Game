@@ -66,16 +66,112 @@ footer {
   background: var(--surface) !important;
 }
 
+/* Dark mode footer */
+body.dark-mode footer {
+  background: #313f57;
+  color: var(--text);
+}
+
+/* =========================
+   WEATHER PAGE BACKGROUND
+   ========================= */
+.weather-page {
+  background: url("../images/weather-background.webp") center/cover no-repeat;
+  position: relative; /* Needed for overlay positioning */
+}
+
+/* =========================
+   DARK MODE TOGGLE
+   ========================= */
+.dark-toggle-bar {
+  width: 100%;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Toggle container */
+.dark-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Label text (Dark/Light) */
+.toggle-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* Default label states */
+.toggle-light {
+  display: inline;
+}
+
+.toggle-dark {
+  display: none;
+}
+
+/* Swap labels when dark mode is enabled */
+body.dark-mode .toggle-light {
+  display: none;
+}
+
+body.dark-mode .toggle-dark {
+  display: inline;
+}
+
+/* Toggle switch container */
+.dark-switch {
+  position: relative;
+  width: 42px;
+  height: 22px;
+}
+
+/* Hidden checkbox input */
+.dark-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Toggle background (slider) */
+.dark-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--toggle);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* Slider circle */
+.dark-slider::before {
+  content: "";  /* Required pseudo-element */
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 3px;
+  left: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease; /* Smooth animation */
+}
+
+/* Move slider when toggled */
+.dark-switch input:checked + .dark-slider::before {
+  transform: translateX(20px);
+}
+
+/* Icon next to toggle */
+.dark-icon {
+  margin-left: 4px;
+}
+
 /* =========================
    FOOTER
    ========================= */
 footer {
   background: #ffffff;
-  color: var(--text);
-}
-
-/* Dark mode footer */
-body.dark-mode footer {
-  background: #313f57;
   color: var(--text);
 }
