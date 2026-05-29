@@ -61,6 +61,45 @@
     </nav>
   </header>
 
+  <!-- =========================
+       MAIN CONTENT AREA
+       ========================= -->
+  <main id="weather-main" role="main" class="d-flex flex-column justify-content-center align-items-center flex-fill">
+    <!--
+      Main container settings:
+      - d-flex → enables flexbox layout
+      - justify-content-center → vertically centers content
+      - align-items-center → horizontally centers content
+      - flex-fill → expands to fill available height
+    -->
+
+    <!-- =========================
+         DARK MODE TOGGLE
+         ========================= -->
+    <div class="dark-toggle-bar" aria-label="Theme switcher">
+      <div class="dark-toggle">
+
+        <!-- Text labels that change based on theme -->
+        <span class="toggle-label">
+          <span class="toggle-light">Dark Mode</span>
+          <span class="toggle-dark">Light Mode</span>
+        </span>
+
+        <!-- Toggle switch (checkbox used for switching theme) -->
+        <label class="dark-switch">
+          <input type="checkbox" id="themeToggle" aria-label="Toggle dark mode" />
+
+          <!-- Visual slider for switch -->
+          <span class="dark-slider" aria-hidden="true"></span>
+        </label>
+
+        <!-- Icon that changes depending on theme -->
+        <span id="themeIcon" class="dark-icon" aria-hidden="true">☀️</span>
+      </div>
+    </div>
+
+  </main>
+
   <!-- FOOTER -->
   <footer class="footer text-center py-3 mt-auto">
 

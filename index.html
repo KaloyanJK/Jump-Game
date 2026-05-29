@@ -63,6 +63,32 @@
     </nav>
   </header>
 
+  <!-- =========================
+       MAIN GAME CONTENT AREA
+       ========================= -->
+  <main class="container-fluid px-0 text-center">
+
+    <!-- Dark mode toggle switch -->
+    <div class="dark-toggle-bar" aria-label="Theme switcher">
+      <div class="dark-toggle">
+        <!-- Labels showing current mode -->
+        <span class="toggle-label">
+          <span class="toggle-light">Dark Mode</span>
+          <span class="toggle-dark">Light Mode</span>
+        </span>
+
+        <!-- Toggle checkbox for theme switching -->
+        <label class="dark-switch">
+          <input type="checkbox" id="themeToggle" aria-label="Toggle dark mode" />
+          <span class="dark-slider" aria-hidden="true"></span>
+        </label>
+
+        <!-- Icon that changes depending on theme -->
+        <span id="themeIcon" class="dark-icon" aria-hidden="true">☀️</span>
+      </div>
+    </div>
+  </main>
+
   <!-- FOOTER -->
   <footer class="text-center py-3 mt-auto">
     <small>Runner Game by Kal © 2026</small>
