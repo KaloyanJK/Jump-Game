@@ -1,1 +1,33 @@
-﻿
+﻿/* =========================
+   GLOBAL THEME VARIABLES
+   Define reusable colours for the whole page
+   ========================= */
+:root {
+  --bg: #f1f5f9;        /* Background colour (light mode) */
+  --surface: #ffffff;   /* Cards / surfaces (boxes) */
+  --text: #0f172a;      /* Default text colour */
+  --accent: #2563eb;    /* Accent colour (buttons/highlights) */
+  --toggle: #302e2e;    /* Toggle color */
+}
+
+/* Dark mode overrides (same variables, different values) */
+.dark-mode {
+  --bg: #0f172a;
+  --surface: #313f57;
+  --text: #e5e7eb;
+  --accent: #38bdf8;
+  --toggle: #b8b9bb;
+}
+
+/* =========================
+   BODY LAYOUT
+   ========================= */
+body {
+  margin: 0;                  /* Removes default browser spacing */
+  min-height: 100vh;          /* Makes page fill full screen */
+  display: flex;
+  flex-direction: column;     /* Stack elements vertically */
+  font-family: Arial, sans-serif;
+  color: var(--text);         /* Uses theme text colour */
+  background: var(--bg);      /* Uses theme background */
+}

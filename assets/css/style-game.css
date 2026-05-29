@@ -1,0 +1,43 @@
+/* =========================
+   ROOT VARIABLES (GLOBAL THEME)
+   Stores reusable colors for the site
+   ========================= */
+:root {
+  --bg: #f1f5f9;                /* Main background color */
+  --surface: #ffffff;           /* Cards / surfaces */
+  --text: #0f172a;              /* Default text color */
+  --accent: #2563eb;            /* Primary accent (buttons, highlights) */
+  --player-fixed: #343836;      /* Player color */
+  --obstacle-fixed: #075507;    /* Obstacle color */
+  --toggle: #302e2e;            /* Toggle color */
+}
+
+/* Dark mode overrides (same variables, different values) */
+.dark-mode {
+  --bg: #0f172a;
+  --surface: #313f57;
+  --text: #e5e7eb;
+  --accent: #38bdf8;
+  --toggle: #b8b9bb;
+}
+
+/* Make page fill full height */
+html,
+body {
+  height: 100%;
+}
+
+/* =========================
+   BODY STYLING
+   Sets layout, font and background
+   ========================= */
+body {
+  display: flex;                  /* Enables vertical layout */
+  flex-direction: column;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: var(--text);             /* Uses variable */
+  background: radial-gradient(circle at top, var(--bg) 0%, #1f5f44 100%);
+  min-height: 100vh;
+  user-select: none;              /* Prevents text selection */
+}
