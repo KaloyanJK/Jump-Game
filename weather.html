@@ -22,12 +22,9 @@
   <link rel="stylesheet" href="assets/css/style-weather.css" />
 </head>
 
-<body>
+<body class="weather-page">
 
-  <!-- =========================
-       HEADER / NAVIGATION BAR
-       Contains logo and page links
-       ========================= -->
+  <!-- HEADER / NAVIGATION BAR -->
   <header>
     <nav class="navbar navbar-expand-lg" aria-label="Main navigation">
       <div class="container-fluid">
@@ -65,17 +62,8 @@
        MAIN CONTENT AREA
        ========================= -->
   <main id="weather-main" role="main" class="d-flex flex-column justify-content-center align-items-center flex-fill">
-    <!--
-      Main container settings:
-      - d-flex → enables flexbox layout
-      - justify-content-center → vertically centers content
-      - align-items-center → horizontally centers content
-      - flex-fill → expands to fill available height
-    -->
 
-    <!-- =========================
-         DARK MODE TOGGLE
-         ========================= -->
+    <!-- DARK MODE TOGGLE -->
     <div class="dark-toggle-bar" aria-label="Theme switcher">
       <div class="dark-toggle">
 
@@ -137,6 +125,8 @@
     <small>Weather App by Kal © 2026</small>
 
   </footer>
+
+  <!--  SCRIPTS -->
 
   <!-- Bootstrap JavaScript bundle (needed for navbar toggle) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer></script>
