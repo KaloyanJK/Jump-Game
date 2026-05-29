@@ -1,17 +1,15 @@
 ﻿/* =========================
-   GLOBAL THEME VARIABLES
-   Define reusable colours for the whole page
+   THEME VARIABLES
    ========================= */
 :root {
-  --bg: #f1f5f9;        /* Background colour (light mode) */
-  --surface: #ffffff;   /* Cards / surfaces (boxes) */
-  --text: #0f172a;      /* Default text colour */
-  --accent: #2563eb;    /* Accent colour (buttons/highlights) */
-  --toggle: #302e2e;    /* Toggle color */
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --accent: #2563eb;
+  --toggle: #302e2e;
 }
 
-/* Dark mode overrides (same variables, different values) */
-.dark-mode {
+body.dark-mode {
   --bg: #0f172a;
   --surface: #313f57;
   --text: #e5e7eb;
@@ -20,19 +18,19 @@
 }
 
 /* =========================
-   BODY LAYOUT
+   BODY / PAGE LAYOUT
    ========================= */
 body {
-  margin: 0;                  /* Removes default browser spacing */
-  min-height: 100vh;          /* Makes page fill full screen */
+  margin: 0;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;     /* Stack elements vertically */
+  flex-direction: column;
   font-family: Arial, sans-serif;
-  color: var(--text);         /* Uses theme text colour */
-  background: var(--bg);      /* Uses theme background */
+  color: var(--text);
+  background: var(--bg);
 }
 
-/* Active navigation link underline */
+/* Active nav link */
 .active {
   border-bottom: 1px solid var(--text);
 }
@@ -42,18 +40,17 @@ body {
    ========================= */
 .weather-page {
   background: url("../images/weather-background.webp") center/cover no-repeat;
-  position: relative; /* Needed for overlay positioning */
+  position: relative;
 }
 
-/* Dark overlay on top of background image */
 .weather-page::before {
-  content: "";               /* Required for pseudo-element */
+  content: "";
   position: absolute;
-  inset: 0;                  /* Covers entire container */
-  background: rgba(0, 0, 0, 0.35); /* Dark transparent overlay */
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
 }
 
-/* Ensures content sits above overlay */
+/* Ensure content above overlay */
 header,
 main,
 footer {
@@ -61,23 +58,40 @@ footer {
   z-index: 1;
 }
 
-/* Navbar background color */
+/* =========================
+   HEADER / NAVBAR
+   ========================= */
 .navbar {
-  background: var(--surface) !important;
-}
-
-/* Dark mode footer */
-body.dark-mode footer {
-  background: #313f57;
+  background: var(--surface);
   color: var(--text);
 }
 
+.navbar a,
+.navbar .nav-link {
+  color: var(--text) !important;
+}
+
+/* Dark mode navbar fixes */
+body.dark-mode .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+body.dark-mode .navbar-toggler-icon {
+  filter: invert(1) brightness(2);
+}
+
+/* Optional glow logo */
+body.dark-mode header img {
+  filter: drop-shadow(0 0 6px white)
+          drop-shadow(0 0 2px white);
+}
+
 /* =========================
-   WEATHER PAGE BACKGROUND
+   MAIN CONTENT
    ========================= */
-.weather-page {
-  background: url("../images/weather-background.webp") center/cover no-repeat;
-  position: relative; /* Needed for overlay positioning */
+#weather-main {
+  flex: 1;
+  padding: 1rem;
 }
 
 /* =========================
@@ -88,32 +102,23 @@ body.dark-mode footer {
   padding: 12px 20px;
   display: flex;
   justify-content: center;
-  box-sizing: border-box;
 }
 
-/* Toggle container */
 .dark-toggle {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-/* Label text (Dark/Light) */
 .toggle-label {
   font-size: 0.9rem;
   font-weight: 700;
-}
-
-/* Default label states */
-.toggle-light {
-  display: inline;
 }
 
 .toggle-dark {
   display: none;
 }
 
-/* Swap labels when dark mode is enabled */
 body.dark-mode .toggle-light {
   display: none;
 }
@@ -122,21 +127,19 @@ body.dark-mode .toggle-dark {
   display: inline;
 }
 
-/* Toggle switch container */
+/* Switch */
 .dark-switch {
   position: relative;
   width: 42px;
   height: 22px;
 }
 
-/* Hidden checkbox input */
 .dark-switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* Toggle background (slider) */
 .dark-slider {
   position: absolute;
   inset: 0;
@@ -145,33 +148,69 @@ body.dark-mode .toggle-dark {
   cursor: pointer;
 }
 
-/* Slider circle */
 .dark-slider::before {
-  content: "";  /* Required pseudo-element */
+  content: "";
   position: absolute;
   width: 16px;
   height: 16px;
   top: 3px;
   left: 3px;
-  background: white;
+  background: #fff;
   border-radius: 50%;
-  transition: transform 0.3s ease; /* Smooth animation */
+  transition: transform 0.3s ease;
 }
 
-/* Move slider when toggled */
 .dark-switch input:checked + .dark-slider::before {
   transform: translateX(20px);
 }
 
-/* Icon next to toggle */
 .dark-icon {
   margin-left: 4px;
 }
 
 /* =========================
+   WEATHER CARD
+   ========================= */
+.weather-card {
+  width: 380px;
+  max-width: 100%;
+  border-radius: 16px;
+  background: var(--surface);
+  backdrop-filter: blur(8px);
+}
+
+.weather-card,
+.weather-card * {
+  color: var(--text);
+}
+
+.weather-card img {
+  width: 80px;
+  height: 80px;
+}
+
+#temp,
+#desc {
+  margin: 0.25rem 0;
+}
+
+#desc {
+  text-transform: capitalize;
+}
+
+/* =========================
    FOOTER
    ========================= */
-footer {
-  background: #ffffff;
+.footer {
+  background: var(--surface);
   color: var(--text);
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 480px) {
+  .weather-card {
+    width: 100%;
+  }
 }
