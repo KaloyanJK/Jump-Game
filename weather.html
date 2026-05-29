@@ -98,6 +98,36 @@
       </div>
     </div>
 
+    <!-- WEATHER CARD Displays live weather data -->
+    <section class="card p-4 shadow-lg text-center weather-card" aria-labelledby="weather-title">
+
+      <!-- Section title -->
+      <h2 id="weather-title" class="h5 mb-3">Current Weather</h2>
+
+      <!-- Weather icon (loaded dynamically via JavaScript) -->
+      <img id="icon" src="assets/images/logo-weather.webp" alt="Weather icon" class="mx-auto mb-2" width="80"
+        height="80" fetchpriority="high" />
+
+
+      <!-- City name (updated dynamically) -->
+      <div id="city" class="h4 fw-semibold" aria-live="polite">
+        Fetching weather...
+      </div>
+
+      <!-- Temperature display -->
+      <div id="temp" class="display-6 fw-bold my-2" aria-live="polite">
+      </div>
+
+      <!-- Weather description (e.g., cloudy, sunny) -->
+      <p id="desc" class="mb-1" aria-live="polite">
+      </p>
+
+      <!-- Extra details (humidity, wind speed, etc.) -->
+      <div id="extra" class="small" aria-live="polite">
+      </div>
+
+    </section>
+
   </main>
 
   <!-- FOOTER -->
