@@ -87,6 +87,32 @@
         <span id="themeIcon" class="dark-icon" aria-hidden="true">☀️</span>
       </div>
     </div>
+
+    <!-- Empty row reserved for layout spacing -->
+    <div class="row"></div>
+
+    <!-- Main game container centered with max width -->
+    <div class="mx-auto" style="max-width: 700px;">
+
+      <!-- GAME AREA Holds player, obstacle, background -->
+      <div id="gameArea" class="game-area">
+
+        <!-- Background layers for parallax effect -->
+        <img id="bgBack" class="bg-layer" src="assets/images/background-2.webp" alt="Background Image"/>
+        <div id="bgFront" class="bg-layer bg-front"></div>
+
+        <!-- Player character element -->
+        <div id="player" class="player">
+          <i class="fa-solid fa-person-running"></i>
+        </div>
+
+        <!-- Obstacle element the player must avoid -->
+        <div id="obstacle" class="obstacle">
+          <i class="fa-solid fa-tree"></i>
+        </div>
+
+      </div>
+    </div>
   </main>
 
   <!-- FOOTER -->
