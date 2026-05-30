@@ -279,3 +279,35 @@ body.dark-mode header img {
   filter: drop-shadow(0 0 6px white)
           drop-shadow(0 0 2px white);
 }
+
+/* GAME AREA */
+
+.game-area {
+  width: 100%;
+  height: 45vh;
+  max-height: 320px;
+  position: relative;
+  overflow: hidden;          /* Hides off-screen elements */
+}
+
+/* BACKGROUND LAYERS  */
+.bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;     /* Wider for scrolling effect */
+  height: 100%;
+  z-index: 0;
+}
+
+/* Background images */
+.bg-back,
+.bg-front {
+  background: url("../images/background-2.webp") repeat-x;
+  background-size: contain;
+}
+
+/* Front layer slightly transparent */
+.bg-front {
+  opacity: 0.65;
+}
