@@ -4,10 +4,12 @@ const apiKey = "36572f7db00c8c9190ecf56965ab8819";
 /*
   Wait until the HTML document is fully loaded
   before running any JavaScript.
+  This ensures all elements exist in the DOM.
 */
 window.addEventListener("DOMContentLoaded", function () {
   initThemeSwitch();   // Setup dark mode toggle
-  initWeatherPage();   // Run weather logic
+  initWeatherPage();   // Run weather logic (only if weather page)
+  initGamePage();      // Run game logic (only if game page)
 });
 
 /*
@@ -25,11 +27,14 @@ function initThemeSwitch() {
   const toggle = getById("themeToggle");
   const icon = getById("themeIcon");
 
-  if (!toggle || !icon) return;
+  // If the toggle doesn't exist, do nothing (page doesn't use it)
+  if (!toggle || !icon) {
+    return;
+  }
 
   function applyTheme(isDark) {
     document.body.classList.toggle("dark-mode", isDark);
-    icon.textContent = isDark ? "🌙" : "☀️";
+    icon.textContent = (isDark ? "🌙" : "☀️");
     toggle.checked = isDark;
   }
 
@@ -40,9 +45,9 @@ function initThemeSwitch() {
   const storedTheme = localStorage.getItem("theme");
   const prefersDark =
     window.matchMedia?.("(prefers-color-scheme: dark)").matches;
-
-  const isDarkMode =
-    storedTheme ? storedTheme === "dark" : prefersDark;
+  const isDarkMode = (
+    storedTheme ? storedTheme === "dark" : prefersDark
+  );
 
   applyTheme(isDarkMode);
 
@@ -58,29 +63,52 @@ function initThemeSwitch() {
 function initWeatherPage() {
   const cityEl = getById("city");
 
-  // If no "city" element → not on weather page
-  if (!cityEl) return;
+  // If "city" element is missing, this is NOT the weather page
+  if (!cityEl) {
+    return;
+  }
 
+  /*
+    Check if the browser supports geolocation
+    (needed to get user's current position)
+  */
   if (!navigator.geolocation) {
     setText("city", "Geolocation not supported");
     return;
   }
 
+  /*
+    Ask for user's location:
+    - Success → fetch weather data
+    - Error → show error message
+  */
   navigator.geolocation.getCurrentPosition(fetchWeather, showWeatherError);
 }
 
 /*
-  Fetch weather data using coordinates
+  Fetch weather data from the API using coordinates
 */
 function fetchWeather(position) {
   const lat = position.coords.latitude;
   const lon = position.coords.longitude;
 
+  /*
+    Build API URL dynamically using:
+    - Latitude & longitude
+    - Metric units (°C)
+    - API key
+  */
   const endpoint =
     "https://api.openweathermap.org/data/2.5/weather" +
     `?lat=${lat}&lon=${lon}` +
     `&units=metric&appid=${apiKey}`;
 
+  /*
+    Send request:
+    - Convert response to JSON
+    - Update UI with data
+    - Handle errors if request fails
+  */
   fetch(endpoint)
     .then((response) => response.json())
     .then(updateWeather)
@@ -88,18 +116,28 @@ function fetchWeather(position) {
 }
 
 /*
-  Update weather UI with API data
+  Update the weather UI with API data
 */
 function updateWeather(data) {
+
+  // Display location name
   setText("city", data.name || "Unknown location");
+
+  // Display temperature (rounded to whole number)
   setText("temp", `${Math.round(data.main.temp)}°C`);
+
+  // Display weather description (e.g. "cloudy")
   setText("desc", data.weather?.[0]?.description || "No description");
 
+  // Display extra info (humidity + wind speed)
   setText(
     "extra",
     `Humidity: ${data.main.humidity}% | Wind: ${data.wind.speed} m/s`
   );
 
+  /*
+    Set weather icon image using icon code from API
+  */
   const iconEl = getById("icon");
   const iconCode = data.weather?.[0]?.icon;
 
@@ -109,7 +147,7 @@ function updateWeather(data) {
 }
 
 /*
-  Error handling
+  Show error if location or API fails
 */
 function showWeatherError() {
   setText("city", "Location access denied");
@@ -119,7 +157,8 @@ function showWeatherError() {
 }
 
 /*
-  Helper: Safely update text content if element exists
+  Helper function:
+  Safely update text content if element exists
 */
 function setText(id, text) {
   const element = getById(id);
@@ -296,4 +335,94 @@ function initGamePage() {
     obstacle.style.right = "-60px";
   }
 
+  /* CHANGE PLAYER ICON */
+  function setPlayerIcon(iconName) {
+    player.innerHTML = `<i class="fa-solid fa-${iconName}"></i>`;
+  }
+
+  function selectCharacter(iconName, button) {
+    if (!iconName || !button) {
+      return;
+    }
+
+    selectedCharacter = iconName;
+    setPlayerIcon(iconName);
+
+    // Highlight selected button
+    characterButtons.forEach((btn) =>
+      btn.classList.toggle("active", btn === button)
+    );
+  }
+
+  /* JUMP MECHANIC */
+  function jump() {
+    if (isJumping || !gameRunning) {
+      return;
+    }
+
+    isJumping = true;
+
+    let position = 0;
+    const baseBottom = 10;
+    const jumpStep = 5;
+
+    /*
+      Move player up until max height,
+      then back down
+    */
+    const upInterval = setInterval(function () {
+      if (position >= 100) {
+        clearInterval(upInterval);
+
+        const downInterval = setInterval(function () {
+          position -= jumpStep;
+          player.style.bottom = `${position + baseBottom}px`;
+
+          if (position <= 0) {
+            clearInterval(downInterval);
+            isJumping = false;
+          }
+        }, 20);
+        return;
+      }
+
+      position += jumpStep;
+      player.style.bottom = `${position + baseBottom}px`;
+    }, 20);
+  }
+
+  /* COLLISION DETECTION */
+  function checkCollision() {
+    // creates an invisible box around the player
+    const playerRect = player.getBoundingClientRect();
+    //  creates an invisible box around the object
+    const obstacleRect = obstacle.getBoundingClientRect();
+
+    return (
+      playerRect.right > obstacleRect.left + 3 &&
+      playerRect.left < obstacleRect.right - 3 &&
+      playerRect.bottom > obstacleRect.top + 3
+    );
+  }
+
+  /* GAME OVER */
+  function endGame() {
+    clearInterval(gameLoopId);
+    gameRunning = false;
+
+    // Save best score in local storage
+    if (score > bestScore) {
+      bestScore = score;
+      localStorage.setItem("bestScore", bestScore);
+      bestScoreEl.textContent = bestScore;
+    }
+
+    actionBtn.innerHTML = `<i class="fa-solid fa-play"></i> Start / Jump`;
+
+    alert(`Game Over!\nScore: ${score}\nBest: ${bestScore}`);
+  }
+
+  function updateScore() {
+    scoreEl.textContent = score;
+  }
 }
