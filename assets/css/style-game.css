@@ -1,3 +1,4 @@
+
 /* =========================
    ROOT VARIABLES (GLOBAL THEME)
    Stores reusable colors for the site
@@ -27,14 +28,15 @@ body {
   height: 100%;
 }
 
-/* BODY STYLING Sets layout, font and background */
+/* BODY STYLING
+   Sets layout, font and background */
 body {
   display: flex;                  /* Enables vertical layout */
   flex-direction: column;
   margin: 0;
   font-family: Arial, sans-serif;
   color: var(--text);             /* Uses variable */
-  background: radial-gradient(circle at center, var(--bg) 0%, #1f5f44 100%);
+  background: radial-gradient(circle at top, var(--bg) 0%, #1f5f44 100%);
   min-height: 100vh;
   user-select: none;              /* Prevents text selection */
 }
@@ -139,7 +141,7 @@ body.dark-mode .toggle-dark {
 
 /* Draggable circle inside switch */
 .dark-slider::before {
-  content: "";                   /* Creates fake element */
+  content: "";            /* Creates fake element */
   position: absolute;
   width: 16px;
   height: 16px;
@@ -168,16 +170,63 @@ body.dark-mode header img {
 }
 
 /* GAME AREA */
-
 .game-area {
   width: 100%;
   height: 45vh;
   max-height: 320px;
   position: relative;
-  overflow: hidden;          /* Hides off-screen elements */
+  overflow: hidden;       /* Hides off-screen elements */
 }
 
-/* BACKGROUND LAYERS  */
+/* CHARACTER SELECT */
+.character-select-wrapper {
+  margin-bottom: 1rem;
+}
+
+.character-select-label {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+/* Flex layout for characters */
+.character-select {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Individual character button */
+.character-option {
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 1.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+/* Hover effect */
+.character-option:hover,
+.character-option:focus-visible {
+  background: rgba(197, 178, 178, 0.5);
+}
+
+/* Selected character */
+.character-option.active {
+  background: #2563eb;
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+/* BACKGROUND LAYERS */
 .bg-layer {
   position: absolute;
   top: 0;
@@ -223,14 +272,65 @@ body.dark-mode header img {
   color: var(--obstacle-fixed);
 }
 
+/* SCORE DISPLAY */
+
+/* Score alignment */
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  color: var(--text);
+}
+
+.score-row span {
+  flex: 1 1 0;
+}
+
+/* Left and right alignment */
+.score-row .score-text {
+  text-align: left;
+}
+
+.score-row .best-text {
+  text-align: right;
+}
+
 /* FOOTER */
 footer {
   background: #ffffff;
   color: var(--text);
+  border-top: 1px solid #e2e8f0;
 }
 
 /* Dark mode footer */
 body.dark-mode footer {
   background: #313f57;
   color: var(--text);
+  border-top-color: #1e293b;
+}
+
+/* MOBILE ADJUSTMENTS */
+@media (max-width: 767px) {
+  /* Button spacing on mobile */
+  #actionBtn {
+    display: block;
+    width: calc(100% - 2rem);
+    max-width: 360px;
+    margin: 1.5rem auto 1rem;
+  }
+
+  /* Score spacing */
+  .score-row {
+    margin-top: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Desktop scale (bigger icons) */
+@media (min-width: 768px) {
+  .player i { font-size: 2.8rem; }
+  .obstacle i { font-size: 2.2rem; }
 }
