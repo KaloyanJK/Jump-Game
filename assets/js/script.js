@@ -250,4 +250,50 @@ function initGamePage() {
     }
   }
 
+  /* MOVE BACKGROUND (PARALLAX EFFECT) */
+  function moveBackground() {
+    bgFrontX -= obstacleSpeed;
+    bgBackX -= obstacleSpeed * 0.4;
+
+    bgFront.style.transform = `translateX(${bgFrontX}px)`;
+    bgBack.style.transform = `translateX(${bgBackX}px)`;
+
+    const resetDistance = gameArea.offsetWidth;
+
+    // Loop backgrounds infinitely
+    if (bgFrontX <= -resetDistance) {
+      bgFrontX = 0;
+    }
+    if (bgBackX <= -resetDistance) {
+      bgBackX = 0;
+    }
+
+  }
+
+  /* MOVE OBSTACLE */
+  function moveObstacle() {
+    const currentRight = parseInt(getComputedStyle(obstacle).right, 10) || 0;
+    obstacle.style.right = `${currentRight + obstacleSpeed}px`;
+
+    /*
+      If obstacle leaves screen:
+      - Reset it
+      - Increase score
+      - Increase difficulty
+    */
+    if (currentRight > gameArea.offsetWidth + 80) {
+      score += 1;
+
+      // Increase speed gradually
+      obstacleSpeed = Math.min(9, 5 + Math.floor(score / 5) * 0.5);
+
+      resetObstacle();
+      updateScore();
+    }
+  }
+
+  function resetObstacle() {
+    obstacle.style.right = "-60px";
+  }
+
 }
