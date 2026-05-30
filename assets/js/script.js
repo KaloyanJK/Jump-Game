@@ -88,7 +88,7 @@ function fetchWeather(position) {
 }
 
 /*
-  Update UI with API data
+  Update weather UI with API data
 */
 function updateWeather(data) {
   setText("city", data.name || "Unknown location");
@@ -119,11 +119,135 @@ function showWeatherError() {
 }
 
 /*
-  Helper: safely update text
+  Helper: Safely update text content if element exists
 */
 function setText(id, text) {
   const element = getById(id);
   if (element) {
     element.innerText = text;
   }
+}
+
+/* ======================================================
+   GAME PAGE LOGIC
+   ====================================================== */
+function initGamePage() {
+  const gameArea = getById("gameArea");
+
+  // If no game area → not on game page
+  if (!gameArea) {
+    return;
+  }
+
+  // Get all important game elements
+  const player = getById("player");
+  const obstacle = getById("obstacle");
+  const actionBtn = getById("actionBtn");
+  const scoreEl = getById("score");
+  const bestScoreEl = getById("bestScore");
+  const bgFront = getById("bgFront");
+  const bgBack = getById("bgBack");
+
+  // Stop if anything critical is missing
+  if (
+    !player ||
+    !obstacle ||
+    !actionBtn ||
+    !scoreEl ||
+    !bestScoreEl ||
+    !bgFront ||
+    !bgBack
+  ) {
+    return;
+  }
+
+  /* GAME STATE VARIABLES */
+  let isJumping = false;    // Prevents jumping again mid-air
+  let gameRunning = false;  // Tracks if game is active
+  let score = 0;
+  let obstacleSpeed = 5;
+  let bgFrontX = 0;
+  let bgBackX = 0;
+  let gameLoopId = null;
+
+  // Load best score from browser storage
+  let bestScore = Number(localStorage.getItem("bestScore")) || 0;
+
+  /* CHARACTER SELECTION */
+  const characterButtons = Array.from(
+    document.querySelectorAll(".character-option")
+  );
+  let selectedCharacter = "person-running";
+
+
+  characterButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      selectCharacter(button.dataset.icon, button);
+    });
+  });
+
+
+  setPlayerIcon(selectedCharacter);
+
+  /* INITIAL UI VALUES */
+  bestScoreEl.textContent = bestScore;
+  scoreEl.textContent = score;
+
+  /* PLAYER CONTROLS */
+  actionBtn.addEventListener("click", handleAction);
+
+  document.addEventListener("keydown", function (event) {
+    if (event.code === "Space" || event.code === "ArrowUp") {
+      event.preventDefault();
+      handleAction();
+    }
+  });
+
+
+  // Mobile tap
+  gameArea.addEventListener("touchstart", handleAction);
+
+  // Desktop click
+  gameArea.addEventListener("click", handleAction);
+
+  /*
+    Handles player action:
+    - Start game if not running
+    - Trigger jump
+  */
+  function handleAction() {
+    if (!gameRunning) {
+      startGame();
+    }
+    jump();
+  }
+
+  /* START GAME */
+  function startGame() {
+    gameRunning = true;
+    score = 0;
+    obstacleSpeed = 5;
+    bgFrontX = 0;
+    bgBackX = 0;
+
+    resetObstacle();
+    updateScore();
+
+    actionBtn.innerHTML = "Jump";
+
+    // Start game loop (runs ~50 times per second)
+    gameLoopId = setInterval(runGameLoop, 20);
+  }
+
+  /* GAME LOOP (MAIN ENGINE) */
+  function runGameLoop() {
+    moveObstacle();
+    moveBackground();
+
+    // Check for collision every frame
+    if (checkCollision()) {
+      endGame();
+    }
+  }
+
 }
