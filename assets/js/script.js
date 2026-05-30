@@ -88,31 +88,21 @@ function initWeatherPage() {
 /*
   Fetch weather data from the API using coordinates
 */
-function fetchWeather(position) {
-  const lat = position.coords.latitude;
-  const lon = position.coords.longitude;
+async function fetchWeather(position) {
+  try {
+    const { latitude: lat, longitude: lon } = position.coords;
 
-  /*
-    Build API URL dynamically using:
-    - Latitude & longitude
-    - Metric units (°C)
-    - API key
-  */
-  const endpoint =
-    "https://api.openweathermap.org/data/2.5/weather" +
-    `?lat=${lat}&lon=${lon}` +
-    `&units=metric&appid=${apiKey}`;
+    const endpoint =
+      `https://api.openweathermap.org/data/2.5/weather` +
+      `?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
 
-  /*
-    Send request:
-    - Convert response to JSON
-    - Update UI with data
-    - Handle errors if request fails
-  */
-  fetch(endpoint)
-    .then((response) => response.json())
-    .then(updateWeather)
-    .catch(() => showWeatherError());
+    const response = await fetch(endpoint);
+    const data = await response.json();
+
+    updateWeather(data);
+  } catch {
+    showWeatherError();
+  }
 }
 
 /*
