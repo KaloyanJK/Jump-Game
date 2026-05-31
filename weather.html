@@ -2,24 +2,24 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="View real-time weather..." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="View real-time weather...">
   <title>Weather Checker</title>
 
   <!-- Preconnect (keep minimal) -->
   <link rel="preconnect" href="https://api.openweathermap.org">
 
   <!-- Bootstrap CSS for layout and responsive design -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
   <!-- Font Awesome for icons (player, obstacle, buttons) -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <!-- Custom CSS for game styling -->
-  <link rel="stylesheet" href="assets/css/style-weather.css" />
+  <link rel="stylesheet" href="assets/css/style-weather.css">
 </head>
 
 <body class="weather-page">
@@ -30,7 +30,7 @@
       <div class="container-fluid">
 
         <!-- Logo image representing the weather app -->
-        <img src="assets/images/logo-weather-2.webp" alt="Weather app logo" width="52" />
+        <img src="assets/images/logo-weather-2.webp" alt="Weather app logo" width="52">
 
         <!-- Button for toggling navbar on mobile devices -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -61,10 +61,10 @@
   <!-- =========================
        MAIN CONTENT AREA
        ========================= -->
-  <main id="weather-main" role="main" class="d-flex flex-column justify-content-center align-items-center flex-fill">
+  <main id="weather-main" class="d-flex flex-column justify-content-center align-items-center flex-fill">
 
     <!-- DARK MODE TOGGLE -->
-    <div class="dark-toggle-bar" aria-label="Theme switcher">
+    <section class="dark-toggle-bar" aria-label="Theme switcher">
       <div class="dark-toggle">
 
         <!-- Text labels that change based on theme -->
@@ -75,7 +75,7 @@
 
         <!-- Toggle switch (checkbox used for switching theme) -->
         <label class="dark-switch">
-          <input type="checkbox" id="themeToggle" aria-label="Toggle dark mode" />
+          <input type="checkbox" id="themeToggle" aria-label="Toggle dark mode">
 
           <!-- Visual slider for switch -->
           <span class="dark-slider" aria-hidden="true"></span>
@@ -84,17 +84,17 @@
         <!-- Icon that changes depending on theme -->
         <span id="themeIcon" class="dark-icon" aria-hidden="true">☀️</span>
       </div>
-    </div>
+    </section>
 
     <!-- WEATHER CARD Displays live weather data -->
     <section class="card p-4 shadow-lg text-center weather-card" aria-labelledby="weather-title">
 
       <!-- Section title -->
-      <h2 id="weather-title" class="h5 mb-3">Current Weather</h2>
+      <h1 id="weather-title" class="h5 mb-3">Current Weather</h1>
 
       <!-- Weather icon (loaded dynamically via JavaScript) -->
       <img id="icon" src="assets/images/logo-weather.webp" alt="Weather icon" class="mx-auto mb-2" width="80"
-        height="80" fetchpriority="high" />
+        height="80" fetchpriority="high">
 
 
       <!-- City name (updated dynamically) -->

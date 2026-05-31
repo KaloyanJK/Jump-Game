@@ -3,29 +3,30 @@
 
 <head>
   <!-- Defines character encoding and responsive behavior -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Meta description for SEO -->
   <meta name="description"
-    content="Play a fun runner game where you jump over obstacles and try to beat your high score. Includes a weather checker and dark mode support." />
+    content="Play a fun runner game where you jump over obstacles and try to beat your high score. 
+    Includes a weather checker and dark mode support.">
 
   <!-- Page title shown in browser tab -->
-  <title>Runner Game</title>
+  <title>Jumping Game</title>
 
   <!-- Preload Image -->
   <link rel="preload" as="image" href="assets/images/background-2.webp" fetchpriority="high">
 
   <!-- Bootstrap CSS for layout and responsive design -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
   <!-- Font Awesome for icons (player, obstacle, buttons) -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <!-- Custom CSS for game styling -->
-  <link rel="stylesheet" href="assets/css/style-game.css" />
+  <link rel="stylesheet" href="assets/css/style-game.css">
 </head>
 
 <body>
@@ -35,7 +36,7 @@
       <div class="container-fluid">
 
         <!-- Site logo -->
-        <img src="assets/images/logo.webp" alt="logo" width="52" loading="lazy" class="d-inline-block align-text-top" />
+        <img src="assets/images/logo.webp" alt="logo" width="52" loading="lazy" class="d-inline-block align-text-top">
 
         <!-- Mobile menu toggle button -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -65,7 +66,7 @@
   <main class="container-fluid px-0 text-center">
 
     <!-- Dark mode toggle switch -->
-    <div class="dark-toggle-bar" aria-label="Theme switcher">
+    <section class="dark-toggle-bar" aria-label="Theme switcher">
       <div class="dark-toggle">
         <!-- Labels showing current mode -->
         <span class="toggle-label">
@@ -75,14 +76,14 @@
 
         <!-- Toggle checkbox for theme switching -->
         <label class="dark-switch">
-          <input type="checkbox" id="themeToggle" aria-label="Toggle dark mode" />
+          <input type="checkbox" id="themeToggle" aria-label="Toggle dark mode">
           <span class="dark-slider" aria-hidden="true"></span>
         </label>
 
         <!-- Icon that changes depending on theme -->
         <span id="themeIcon" class="dark-icon" aria-hidden="true">☀️</span>
       </div>
-    </div>
+    </section>
 
     <!-- Empty row reserved for layout spacing -->
     <div class="row"></div>
@@ -92,10 +93,10 @@
 
       <!-- GAME AREA
            Holds player, obstacle, background -->
-      <div id="gameArea" class="game-area">
+      <section id="gameArea" class="game-area" aria-label="Game area">
 
         <!-- Background layers for parallax effect -->
-        <img id="bgBack" class="bg-layer" src="assets/images/background-2.webp" alt="Background Image"/>
+        <img id="bgBack" class="bg-layer" src="assets/images/background-2.webp" alt="Background Image">
         <div id="bgFront" class="bg-layer bg-front"></div>
 
         <!-- Player character element -->
@@ -108,7 +109,7 @@
           <i class="fa-solid fa-tree"></i>
         </div>
 
-      </div>
+      </section>
 
       <!-- Action button to start game or jump -->
       <button id="actionBtn" class="btn btn-primary w-100 mt-3">
@@ -125,11 +126,11 @@
 
       <!-- CHARACTER SELECTION
            Lets player choose avatar -->
-      <div class="character-select-wrapper">
+      <section class="character-select-wrapper" aria-label="Choose player character">
         <div class="character-select-label">Select your hero</div>
 
         <!-- Character options -->
-        <div class="character-select" aria-label="Choose player character">
+        <div class="character-select">
 
           <!-- Default runner character -->
           <button type="button" class="character-option active" data-icon="person-running" aria-label="Runner">
@@ -147,7 +148,7 @@
           </button>
 
         </div>
-      </div>
+      </section>
 
     </div>
   </main>
@@ -155,7 +156,7 @@
   <!-- FOOTER
        Simple copyright text -->
   <footer class="text-center py-3 mt-auto">
-    <small>Runner Game by Kal © 2026</small>
+    <small>Jumping Game by Kal © 2026</small>
   </footer>
 
   <!-- Bootstrap JS (used for navbar toggle functionality) -->
