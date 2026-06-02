@@ -1,28 +1,26 @@
 /* API key used to access OpenWeatherMap service */
 const apiKey = "36572f7db00c8c9190ecf56965ab8819";
 
-/*
-  Wait until the HTML document is fully loaded
-  before running any JavaScript.
-  This ensures all elements exist in the DOM.
-*/
+// Wait until the HTML document is fully loaded
+// before running any JavaScript.
+// This ensures all elements exist in the DOM.
 window.addEventListener("DOMContentLoaded", function () {
   initThemeSwitch();   // Setup dark mode toggle
   initWeatherPage();   // Run weather logic (only if weather page)
   initGamePage();      // Run game logic (only if game page)
 });
 
-/*
-  Helper function:
-  Quickly select an element by ID
-*/
+
+// Helper function:
+// Quickly select an element by ID
 function getById(id) {
   return document.getElementById(id);
 }
 
-/* ======================================================
-   DARK MODE / LIGHT MODE TOGGLE
-   ====================================================== */
+// DARK MODE / LIGHT MODE TOGGLE
+// Find the theme switch and icon, load the saved theme from localStorage, 
+// detect system preference if needed, update the page theme, 
+// and save future changes.
 function initThemeSwitch() {
   const toggle = getById("themeToggle");
   const icon = getById("themeIcon");
@@ -32,34 +30,45 @@ function initThemeSwitch() {
     return;
   }
 
+  // Adds/remove the dark-mode CSS class, update the icon, 
+  // and synchronize the toggle state.
   function applyTheme(isDark) {
     document.body.classList.toggle("dark-mode", isDark);
     icon.textContent = (isDark ? "🌙" : "☀️");
     toggle.checked = isDark;
   }
 
+  // Save 'dark' or 'light' in localStorage.
   function saveTheme(isDark) {
     localStorage.setItem("theme", isDark ? "dark" : "light");
   }
 
+  // Read valu "theme" from browsers local storage
   const storedTheme = localStorage.getItem("theme");
+
+  // Check the user's operating system/browser theme preference
   const prefersDark =
     window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+  
+  // Which theme to use.
   const isDarkMode = (
     storedTheme ? storedTheme === "dark" : prefersDark
   );
 
+  // Apply the chosen theme to the page
   applyTheme(isDarkMode);
 
+  // Add an event listener to a theme toggle control (checkbox).
   toggle.addEventListener("change", function () {
+    // Update the page theme
     applyTheme(toggle.checked);
     saveTheme(toggle.checked);
   });
 }
 
-/* ======================================================
-   WEATHER PAGE LOGIC
-   ====================================================== */
+// WEATHER PAGE LOGIC
+// Check if weather page elements exist, verifie geolocation support, 
+// request the user's location, and call weather retrieval functions.
 function initWeatherPage() {
   const cityEl = getById("city");
 
@@ -68,26 +77,23 @@ function initWeatherPage() {
     return;
   }
 
-  /*
-    Check if the browser supports geolocation
-    (needed to get user's current position)
-  */
+  // Check if the browser supports geolocation
+  // (needed to get user's current position)
   if (!navigator.geolocation) {
     setText("city", "Geolocation not supported");
     return;
   }
 
-  /*
-    Ask for user's location:
-    - Success → fetch weather data
-    - Error → show error message
-  */
+  
+  // Ask for user's location:
+  // - Success → fetch weather data
+  // - Error → show error message
   navigator.geolocation.getCurrentPosition(fetchWeather, showWeatherError);
 }
 
-/*
-  Fetch weather data from the API using coordinates
-*/
+
+// Extract coordinates, build the API request URL, fetche
+// weather data asynchronously, and passe it to updateWeather().
 async function fetchWeather(position) {
   try {
     const { latitude: lat, longitude: lon } = position.coords;
@@ -105,9 +111,7 @@ async function fetchWeather(position) {
   }
 }
 
-/*
-  Update the weather UI with API data
-*/
+//  Update the weather UI with API data
 function updateWeather(data) {
 
   // Display location name
@@ -125,9 +129,7 @@ function updateWeather(data) {
     `Humidity: ${data.main.humidity}% | Wind: ${data.wind.speed} m/s`
   );
 
-  /*
-    Set weather icon image using icon code from API
-  */
+  // Set weather icon image using icon code from API
   const iconEl = getById("icon");
   const iconCode = data.weather?.[0]?.icon;
 
@@ -136,20 +138,15 @@ function updateWeather(data) {
   }
 }
 
-/*
-  Show error if location or API fails
-*/
+//  Show error if location or API fails
 function showWeatherError() {
   setText("city", "Location access denied");
   setText("temp", "");
   setText("desc", "");
   setText("extra", "");
 }
-
-/*
-  Helper function:
-  Safely update text content if element exists
-*/
+// Helper function:
+// Safely update text content if element exists
 function setText(id, text) {
   const element = getById(id);
   if (element) {
@@ -157,13 +154,13 @@ function setText(id, text) {
   }
 }
 
-/* ======================================================
-   GAME PAGE LOGIC
-   ====================================================== */
+//GAME PAGE LOGIC
+// Load game elements, initialize scores and variables, 
+// set up controls, and handles character selection.
 function initGamePage() {
   const gameArea = getById("gameArea");
 
-  // If no game area → not on game page
+  // If no game area return
   if (!gameArea) {
     return;
   }
@@ -190,24 +187,23 @@ function initGamePage() {
     return;
   }
 
-  /* GAME STATE VARIABLES */
-  let isJumping = false;    // Prevents jumping again mid-air
-  let gameRunning = false;  // Tracks if game is active
+  // GAME STATE VARIABLES
+  let isJumping = false;    // Prevent jumping again mid-air
+  let gameRunning = false;  // Track if game is active
   let score = 0;
   let obstacleSpeed = 5;
   let bgFrontX = 0;
   let bgBackX = 0;
-  let gameLoopId = null;
+  let gameLoopId = null;    // Add no value
 
   // Load best score from browser storage
   let bestScore = Number(localStorage.getItem("bestScore")) || 0;
 
-  /* CHARACTER SELECTION */
+  // Character selection
   const characterButtons = Array.from(
     document.querySelectorAll(".character-option")
   );
   let selectedCharacter = "person-running";
-
 
   characterButtons.forEach(function (button) {
     button.addEventListener("click", function () {
@@ -215,16 +211,14 @@ function initGamePage() {
     });
   });
 
-
   setPlayerIcon(selectedCharacter);
 
-  /* INITIAL UI VALUES */
+  // Initial UI values
   bestScoreEl.textContent = bestScore;
   scoreEl.textContent = score;
 
-  /* PLAYER CONTROLS */
+  // Player controls click or press of space bar
   actionBtn.addEventListener("click", handleAction);
-
   document.addEventListener("keydown", function (event) {
     if (event.code === "Space" || event.code === "ArrowUp") {
       event.preventDefault();
@@ -232,18 +226,15 @@ function initGamePage() {
     }
   });
 
-
-  // Mobile tap
+  // Mobile tap (button)
   gameArea.addEventListener("touchstart", handleAction);
 
   // Desktop click
   gameArea.addEventListener("click", handleAction);
 
-  /*
-    Handles player action:
-    - Start game if not running
-    - Trigger jump
-  */
+  // Handle player action:
+  // - Start game if not running
+  // - Trigger jump
   function handleAction() {
     if (!gameRunning) {
       startGame();
@@ -251,7 +242,7 @@ function initGamePage() {
     jump();
   }
 
-  /* START GAME */
+  // Start Game
   function startGame() {
     gameRunning = true;
     score = 0;
@@ -268,7 +259,8 @@ function initGamePage() {
     gameLoopId = setInterval(runGameLoop, 20);
   }
 
-  /* GAME LOOP (MAIN ENGINE) */
+  // GAME LOOP (MAIN ENGINE)
+  // Run repeatedly, move obstacles and backgrounds, and check for collisions.
   function runGameLoop() {
     moveObstacle();
     moveBackground();
@@ -279,7 +271,8 @@ function initGamePage() {
     }
   }
 
-  /* MOVE BACKGROUND (PARALLAX EFFECT) */
+  // Move front and back layers at different speeds, 
+  // creating a parallax effect and looping backgrounds. (PARALLAX effect)
   function moveBackground() {
     bgFrontX -= obstacleSpeed;
     bgBackX -= obstacleSpeed * 0.4;
@@ -299,20 +292,17 @@ function initGamePage() {
 
   }
 
-  /* MOVE OBSTACLE */
+  // Move obstacle
   function moveObstacle() {
     const currentRight = parseInt(getComputedStyle(obstacle).right, 10) || 0;
     obstacle.style.right = `${currentRight + obstacleSpeed}px`;
 
-    /*
-      If obstacle leaves screen:
-      - Reset it
-      - Increase score
-      - Increase difficulty
-    */
+    // If obstacle leaves screen:
+    // - Reset it
+    // - Increase score
+    // - Increase difficulty
     if (currentRight > gameArea.offsetWidth + 80) {
       score += 1;
-
       // Increase speed gradually
       obstacleSpeed = Math.min(9, 5 + Math.floor(score / 5) * 0.5);
 
@@ -321,15 +311,18 @@ function initGamePage() {
     }
   }
 
+  // Place the obstacle off-screen ready for reuse.
   function resetObstacle() {
     obstacle.style.right = "-60px";
   }
 
-  /* CHANGE PLAYER ICON */
+  // Update the Font Awesome icon displayed for the player.
   function setPlayerIcon(iconName) {
     player.innerHTML = `<i class="fa-solid fa-${iconName}"></i>`;
   }
 
+  // Save the chosen character, update the displayed icon, 
+  // and highlight the selected button.
   function selectCharacter(iconName, button) {
     if (!iconName || !button) {
       return;
@@ -344,7 +337,9 @@ function initGamePage() {
     );
   }
 
-  /* JUMP MECHANIC */
+  // Jump magic 
+  // Prevent double-jumping, move the player upward, 
+  // then downward using timed intervals
   function jump() {
     if (isJumping || !gameRunning) {
       return;
@@ -356,10 +351,8 @@ function initGamePage() {
     const baseBottom = 10;
     const jumpStep = 5;
 
-    /*
-      Move player up until max height,
-      then back down
-    */
+    // Move player up until max height,
+    // then back down
     const upInterval = setInterval(function () {
       if (position >= 100) {
         clearInterval(upInterval);
@@ -381,11 +374,12 @@ function initGamePage() {
     }, 20);
   }
 
-  /* COLLISION DETECTION */
+  // COLLISION DETECTION
+  // Create collision boxes and checks for overlap.
   function checkCollision() {
-    // creates an invisible box around the player
+    // Create an invisible box around the player
     const playerRect = player.getBoundingClientRect();
-    //  creates an invisible box around the object
+    // Create an invisible box around the object
     const obstacleRect = obstacle.getBoundingClientRect();
 
     return (
@@ -395,7 +389,7 @@ function initGamePage() {
     );
   }
 
-  /* GAME OVER */
+  // GAME OVER 
   function endGame() {
     clearInterval(gameLoopId);
     gameRunning = false;
@@ -409,9 +403,11 @@ function initGamePage() {
 
     actionBtn.innerHTML = `<i class="fa-solid fa-play"></i> Start / Jump`;
 
+    // Display the game end message (score and best score)
     alert(`Game Over!\nScore: ${score}\nBest: ${bestScore}`);
   }
 
+  // Update the score element with the current score.
   function updateScore() {
     scoreEl.textContent = score;
   }
