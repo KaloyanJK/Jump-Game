@@ -1,6 +1,4 @@
-﻿/* =========================
-   THEME VARIABLES
-   ========================= */
+﻿/* THEME VARIABLES */
 :root {
   --bg: #f1f5f9;
   --surface: #ffffff;
@@ -9,6 +7,9 @@
   --toggle: #302e2e;
 }
 
+/* When .dark-mode is added to the body, these values
+   are overridden automatically, allowing the entire
+   interface to switch themes without duplicating styles. */
 body.dark-mode {
   --bg: #0f172a;
   --surface: #313f57;
@@ -17,9 +18,7 @@ body.dark-mode {
   --toggle: #b8b9bb;
 }
 
-/* =========================
-   BODY / PAGE LAYOUT
-   ========================= */
+/* BODY / PAGE LAYOUT */
 body {
   margin: 0;
   min-height: 100vh;
@@ -35,14 +34,15 @@ body {
   border-bottom: 1px solid var(--text);
 }
 
-/* =========================
-   WEATHER PAGE BACKGROUND
-   ========================= */
+/* WEATHER PAGE BACKGROUND */
 .weather-page {
   background: url("../images/weather-background.webp") center/cover no-repeat;
   position: relative;
 }
 
+/* Create a semi-transparent overlay above the background image.
+   This improves text readability by darkening the image while
+   keeping the image visible underneath. */
 .weather-page::before {
   content: "";
   position: absolute;
@@ -50,7 +50,9 @@ body {
   background: rgba(0, 0, 0, 0.35);
 }
 
-/* Ensure content above overlay */
+/* The overlay covers the entire page, so header, main,
+   and footer are moved to a higher stacking layer to
+   ensure they remain visible and interactive. */
 header,
 main,
 footer {
@@ -58,9 +60,7 @@ footer {
   z-index: 1;
 }
 
-/* =========================
-   HEADER / NAVBAR
-   ========================= */
+/* HEADER / NAVBAR */
 .navbar {
   background: var(--surface);
   color: var(--text);
@@ -71,7 +71,9 @@ footer {
   color: var(--text) !important;
 }
 
-/* Dark mode navbar fixes */
+/* Bootstrap's default hamburger icon is designed for
+   light backgrounds. The filter inverts the icon colours
+   so it remains visible against the darker navbar. */
 body.dark-mode .navbar-toggler {
   border-color: rgba(255, 255, 255, 0.6);
 }
@@ -80,23 +82,20 @@ body.dark-mode .navbar-toggler-icon {
   filter: invert(1) brightness(2);
 }
 
-/* Optional glow logo */
+/* Add a subtle glow around the logo in dark mode,
+   helping it stand out against darker backgrounds. */
 body.dark-mode header img {
   filter: drop-shadow(0 0 6px white)
           drop-shadow(0 0 2px white);
 }
 
-/* =========================
-   MAIN CONTENT
-   ========================= */
+/* MAIN CONTENT */
 #weather-main {
   flex: 1;
   padding: 1rem;
 }
 
-/* =========================
-   DARK MODE TOGGLE
-   ========================= */
+/* DARK MODE TOGGLE */
 .dark-toggle-bar {
   width: 100%;
   padding: 12px 20px;
@@ -127,7 +126,10 @@ body.dark-mode .toggle-dark {
   display: inline;
 }
 
-/* Switch */
+/* Native checkbox styling is hidden and replaced
+   with a custom slider built using CSS. The knob
+   is created with ::before and animated when the
+   checkbox state changes. */
 .dark-switch {
   position: relative;
   width: 42px;
@@ -160,6 +162,9 @@ body.dark-mode .toggle-dark {
   transition: transform 0.3s ease;
 }
 
+/* Move the circular knob to the opposite side of
+   the switch when the checkbox becomes checked,
+   creating a smooth toggle animation. */
 .dark-switch input:checked + .dark-slider::before {
   transform: translateX(20px);
 }
@@ -168,9 +173,11 @@ body.dark-mode .toggle-dark {
   margin-left: 4px;
 }
 
-/* =========================
-   WEATHER CARD
-   ========================= */
+/* WEATHER CARD */
+/* Create a frosted-glass appearance by applying
+   a blur effect to whatever appears behind the card.
+   Modern browsers support backdrop-filter, while
+   the solid background colour acts as a fallback. */
 .weather-card {
   width: 380px;
   max-width: 100%;
@@ -198,17 +205,16 @@ body.dark-mode .toggle-dark {
   text-transform: capitalize;
 }
 
-/* =========================
-   FOOTER
-   ========================= */
+/*  FOOTER */
 .footer {
   background: var(--surface);
   color: var(--text);
 }
 
-/* =========================
-   RESPONSIVE
-   ========================= */
+/* RESPONSIVE */
+/* On small screens the fixed card width is removed
+   so the card can expand to the available viewport
+   width, improving usability on mobile devices. */
 @media (max-width: 480px) {
   .weather-card {
     width: 100%;
