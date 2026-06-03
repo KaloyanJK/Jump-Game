@@ -239,7 +239,7 @@ body.dark-mode header img {
 /* Background images */
 .bg-back,
 .bg-front {
-  background: url("../images/background-2.webp") repeat-x;
+  background: url("../images/parallax-forest-background.webp") repeat-x;
   background-size: contain;
 }
 
